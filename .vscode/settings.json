@@ -1,0 +1,34 @@
+{
+    // editor and terminal font type and size
+    "editor.fontFamily": "CaskaydiaCove Nerd Font Mono",
+    "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font Mono",
+    "editor.fontSize": 12,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "terminal.integrated.fontSize": 12,
+    "terminal.integrated.lineHeight": 1,
+    // bracket pairs
+    "editor.bracketPairColorization.enabled": true,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "editor.comments.insertSpace": true,
+    // editor and terminal UI
+    "editor.detectIndentation": true,
+    "editor.lineHeight": 0,
+    "editor.minimap.enabled": false,
+    "terminal.integrated.shellIntegration.enabled": true,
+    "files.trimTrailingWhitespace": true,
+    // markdown
+    "markdown.preview.fontSize": 10,
+    "markdown.preview.lineHeight": 1.0,
+    "markdown-preview-github-styles.colorTheme": "light",
+    "markdownShiki.theme": "min-light",
+    // json
+    "json.maxItemsComputed": 100000,
+    // yaml
+    "yaml.format.printWidth": 100,
+    // spell check
+    "cSpell.enabled": true,
+    "cSpell.caseSensitive": true,
+    "cSpell.words": []
+}
+
