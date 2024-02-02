@@ -50,10 +50,10 @@ report_ip_status
 # * run rtl analysis - covered in synthesis.tcl
 print_green "running RTL analysis (elaboration)"
 # synth_design -rtl -rtl_skip_mlo -name ${name_run_rtl}
-# synth_design -top ${top_module_rtl} -part ${fpga_model_no} -rtl
+# synth_design -top ${top_module_rtl} -part ${fpga_part_name} -rtl
 
 synth_design -rtl_skip_mlo -name ${name_run_rtl}
-# synth_design -top ${top_module_rtl} -part ${fpga_model_no}
+# synth_design -top ${top_module_rtl} -part ${fpga_part_name}
 
 # * write rtl analysis checkpoint
 # ! dont need a checkpoint for this stage
