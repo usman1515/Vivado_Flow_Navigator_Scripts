@@ -1,24 +1,23 @@
-# run script
-# vivado -mode batch -source ./scripts/main.tcl -notrace
+source scripts/color_func.tcl
 
-# # Print the total number of arguments
-# puts "Total number of arguments: $argc"
-# # Print each cmd line argument
-# foreach arg $argv {
-#     puts "Argument: $arg"
-# }
+# get start time
+print_blue "Run started at:     [clock format [clock seconds] -format "%d-%b-%Y - %I:%M:%S - %p"]"
+set current_datetime [clock format [clock seconds] -format "%Y-%m-%d_%H:%M:%S"]
 
 # * pwd
-set prj_dir         [pwd]
-set prj_name        [file tail $prj_dir]
+set prj_dir             [pwd]
+set prj_name            [file tail $prj_dir]
 
-puts "prj_dir:          $prj_dir"
-puts "prj_name:         $prj_name"
+# * vars global - fpga and board part num
+# --- basys 3
+set fpga_part_name      "xc7a35tcpg236-1"
+set board_part_name     "digilentinc.com:basys3:part0:1.0"
+set top_module_rtl      "TEST_SORTER_TOP"
+# --- vcu118
+# set fpga_part_name      "xcvu9p-flga2104-2L-e"
+# set board_part_name     "xilinx.com:vcu118:part0:2.4"
+# set top_module_rtl      "TEST_SORTER_TOP"
 
-# * vars global - basys 3
-set fpga_model_no   "xc7a35tcpg236-1"
-set board_model_no  "digilentinc.com:basys3:part0:1.0"
-set top_module_rtl  "TEST_SORTER_TOP"
 
 # * vars rtl analysis
 set name_run_rtl        "rtl_1"
@@ -72,35 +71,43 @@ set name_rpt_timing6    "post_bit_timing"
 set name_rpt_util6      "post_bit_utilization"
 
 # * paths global
-set vhdl_rtl_dir    "${prj_dir}/${prj_name}.srcs/sources_1/new"
-set vhdl_ip_srcs    "${prj_dir}/${prj_name}.srcs/sources_1/ip"
-set dir_constraint  "${prj_dir}/${prj_name}.srcs/constrs_1/new"
-set dir_rpt         "reports"
-set dir_chkp        "checkpoints"
-
+set vhdl_rtl_dir        "${prj_dir}/${prj_name}.srcs/sources_1/imports/new"
+set vhdl_ip_srcs        "${prj_dir}/${prj_name}.srcs/sources_1/ip"
+set dir_constraint      "${prj_dir}/${prj_name}.srcs/constrs_1/new"
+set dir_rpt             "reports"
+set dir_chkp            "checkpoints"
+set dir_logs            "logs"
 
 # * create in memory project
 # set fpga
-set_part ${fpga_model_no}
+set_part ${fpga_part_name}
 # set board - comment for basys3
-# set_property board_part ${board_model_no} [current_project]
-# set max threads for implementation phases 1-8
-set_param general.maxThreads 4
+# set_property board_part ${board_part_name} [current_project]
+
+# * set max threads for implementation phases 1-8
+set_param general.maxThreads 8
 
 
-# create reports dir
+# create output dir
 if {![file isdirectory $dir_rpt]} {
     file mkdir -p $dir_rpt
-    puts "\nDirectory created: $dir_rpt"
+    print_blue "\nDirectory created: $dir_rpt"
 } else {
-    puts "\nDirectory already exists: $dir_rpt"
+    print_blue "\nDirectory already exists: $dir_rpt"
 }
 # create checkpoints dir
 if {![file isdirectory $dir_chkp]} {
     file mkdir -p $dir_chkp
-    puts "\nDirectory created: $dir_chkp"
+    print_blue "\nDirectory created: $dir_chkp"
 } else {
-    puts "\nDirectory already exists: $dir_chkp"
+    print_blue "\nDirectory already exists: $dir_chkp"
+}
+# create logs dir
+if {![file isdirectory $dir_logs]} {
+    file mkdir -p $dir_logs
+    print_blue "\nDirectory created: $dir_logs"
+} else {
+    print_blue "\nDirectory already exists: $dir_logs"
 }
 
 
@@ -130,5 +137,11 @@ source scripts/impl_s4_phys_opt_design.tcl
 # ===================================== Step 3.5: route_design
 source scripts/impl_s5_route_design.tcl
 
-# ===================================== Step 4: Generate Bitstream
+# # ===================================== Step 4: Generate Bitstream
 source scripts/gen_bitstream.tcl
+
+
+
+# copy current log generated to logs folder
+file copy -force [file join $prj_dir vivado.log] [file join $dir_logs "vivado_${current_datetime}.log"]
+print_blue "Log file copied to: [file join $dir_logs "vivado_${current_datetime}.log"]"
