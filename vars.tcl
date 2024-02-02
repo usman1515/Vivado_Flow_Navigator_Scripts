@@ -1,14 +1,18 @@
 source scripts/color_func.tcl
 
-# * pwd
 puts " "
 print_blue "prj_dir:            $prj_dir"
 print_blue "prj_name:           $prj_name"
+print_blue "vhdl_rtl_dir:       $vhdl_rtl_dir"
+print_blue "vhdl_ip_srcs:       $vhdl_ip_srcs"
+print_blue "dir_constraint:     $dir_constraint"
+print_blue "dir_rpt:            $dir_rpt"
+print_blue "dir_chkp:           $dir_chkp"
+print_blue "dir_logs:           $dir_logs"
 
 puts " "
-print_blue "fpga_model_no:      $fpga_model_no"
-print_blue "board_model_no:     $board_model_no"
-print_blue "prj_name:           $prj_name"
+print_blue "fpga_part_name:     $fpga_part_name"
+print_blue "board_part_name:    $board_part_name"
 print_blue "top_module_rtl:     $top_module_rtl"
 
 puts " "
@@ -64,11 +68,3 @@ print_blue "name_run_bit:       $name_run_bit"
 print_blue "name_rpt_clk6:      $name_rpt_clk6"
 print_blue "name_rpt_timing6:   $name_rpt_timing6"
 print_blue "name_rpt_util6:     $name_rpt_util6"
-
-puts " "
-print_blue "prj_dir:            $prj_dir"
-print_blue "vhdl_rtl_dir:       $vhdl_rtl_dir"
-print_blue "vhdl_ip_srcs:       $vhdl_ip_srcs"
-print_blue "dir_constraint:     $dir_constraint"
-print_blue "dir_rpt:            $dir_rpt"
-print_blue "dir_chkp:           $dir_chkp"
