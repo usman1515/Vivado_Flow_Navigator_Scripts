@@ -6,8 +6,7 @@ source ./scripts/color_func.tcl
 set start_time [clock seconds]
 
 # * -directive values
-# set val_directive "Explore"
-set val_directive "AggressiveExplore"
+# set val_directive "AggressiveExplore"
 # set val_directive "NoTimingRelaxation"
 # set val_directive "MoreGlobalIterations"
 # set val_directive "HigherDelayCost"
@@ -15,7 +14,8 @@ set val_directive "AggressiveExplore"
 # set val_directive "AlternateCLBRouting"
 # set val_directive "RuntimeOptimized"
 # set val_directive "Quick"
-# set val_directive "Default"
+# set val_directive "Explore"
+set val_directive "Default"
 
 # * set checkpoint paths
 set chkp3_path ${dir_chkp}/${name_chkp_impl3}.dcp
@@ -42,9 +42,7 @@ if {[file exists $chkp4_path]} {
 
 # * run route_design
 print_green "running implementation phase: route_design"
-route_design \
-    -directive ${val_directive} \
-    -tns_cleanup
+route_design -directive ${val_directive} -tns_cleanup
 
 # route_design -directive AggressiveExplore -tns_cleanup
 # * write checkpoint
@@ -53,8 +51,8 @@ write_checkpoint -force ${dir_chkp}/${name_chkp_impl5}.dcp
 
 # * write reports
 print_green "writing reports: post implementation route_design"
-report_clocks -file ${dir_rpt}/${name_rpt_clk5}.rpt
-report_timing_summary -file ${dir_rpt}/${name_rpt_timing5}.rpt
+# report_clocks -file ${dir_rpt}/${name_rpt_clk5}.rpt
+# report_timing_summary -file ${dir_rpt}/${name_rpt_timing5}.rpt
 report_utilization -file ${dir_rpt}/${name_rpt_util5}.rpt
 
 # * get elapsed time
@@ -72,4 +70,4 @@ set seconds [expr {$rem_sec % 60}]
 # print total time taken
 print_blue "Simulation started at:  [clock format $start_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
 print_blue "Simulation ended at:    [clock format $end_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
-print_red "Implementation (route_design) time taken: [format "%02d:%02d:%02d" $hours $minutes $seconds]"
+print_red "Implementation (route_design) time taken: [format \"%02d:%02d:%02d:%02d\" $days $hours $minutes $seconds]"

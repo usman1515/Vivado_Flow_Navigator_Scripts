@@ -46,4 +46,4 @@ set seconds [expr {$rem_sec % 60}]
 # print total time taken
 print_blue "Simulation started at:  [clock format $start_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
 print_blue "Simulation ended at:    [clock format $end_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
-print_red "Implementation (phys_opt_design) time taken: [format "%02d:%02d:%02d" $hours $minutes $seconds]"
+print_red "Implementation (phys_opt_design) time taken: [format \"%02d:%02d:%02d:%02d\" $days $hours $minutes $seconds]"

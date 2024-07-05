@@ -6,7 +6,6 @@ source ./scripts/color_func.tcl
 set start_time [clock seconds]
 
 # * -directive values
-# set val_directive "Explore"
 # set val_directive "EarlyBlockPlacement"
 # set val_directive "WLDrivenBlockPlacement"
 # set val_directive "ExtraNetDelay_high"
@@ -14,7 +13,7 @@ set start_time [clock seconds]
 # set val_directive "AltSpreadLogic_high"
 # set val_directive "AltSpreadLogic_medium"
 # set val_directive "AltSpreadLogic_low"
-set val_directive "ExtraPostPlacementOpt"
+# set val_directive "ExtraPostPlacementOpt"
 # set val_directive "ExtraTimingOpt"
 # set val_directive "SSI_SpreadLogic_high"
 # set val_directive "SSI_SpreadLogic_low"
@@ -26,7 +25,8 @@ set val_directive "ExtraPostPlacementOpt"
 # set val_directive "Quick"
 # set val_directive "RQS"
 # set val_directive "Auto"
-# set val_directive "Default"
+# set val_directive "Explore"
+set val_directive "Default"
 
 
 # * set checkpoint paths
@@ -62,8 +62,8 @@ write_checkpoint -force ${dir_chkp}/${name_chkp_impl3}.dcp
 
 # * write reports
 print_green "writing reports: post implementation place_design"
-report_clocks -file ${dir_rpt}/${name_rpt_clk3}.rpt
-report_timing_summary -file ${dir_rpt}/${name_rpt_timing3}.rpt
+# report_clocks -file ${dir_rpt}/${name_rpt_clk3}.rpt
+# report_timing_summary -file ${dir_rpt}/${name_rpt_timing3}.rpt
 report_utilization -file ${dir_rpt}/${name_rpt_util3}.rpt
 
 # * get elapsed time
@@ -81,4 +81,4 @@ set seconds [expr {$rem_sec % 60}]
 # print total time taken
 print_blue "Simulation started at:  [clock format $start_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
 print_blue "Simulation ended at:    [clock format $end_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
-print_red "Implementation (place_design) time taken: [format "%02d:%02d:%02d" $hours $minutes $seconds]"
+print_red "Implementation (place_design) time taken: [format \"%02d:%02d:%02d:%02d\" $days $hours $minutes $seconds]"
