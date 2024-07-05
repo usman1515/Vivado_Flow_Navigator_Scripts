@@ -5,24 +5,14 @@ source ./scripts/color_func.tcl
 # * get start time
 set start_time [clock seconds]
 
-# * -directive values
-# set val_directive "Explore"
-# set val_directive "ExploreArea"
-set val_directive "ExploreWithRemap"
-# set val_directive "ExploreSequentialArea"
-# set val_directive "AddRemap"
-# set val_directive "NoBramPowerOpt"
-# set val_directive "RuntimeOptimized"
-# set val_directive "RQS"
-# set val_directive "Default"
-
 # * open previous checkpoint
 print_green "reading checkpoint: ${name_chkp_synth}"
 open_checkpoint ${dir_chkp}/${name_chkp_synth}.dcp
 
 # * run opt_design
 print_green "running implementation phase: opt_design"
-opt_design -directive ${val_directive}
+# ----- default implementation
+opt_design -directive Default
 
 # * write checkpoint
 print_green "writing checkpoint: ${name_chkp_impl1}"
@@ -30,8 +20,8 @@ write_checkpoint -force ${dir_chkp}/${name_chkp_impl1}.dcp
 
 # * write reports
 print_green "writing reports: post implementation opt_design"
-report_clocks -file ${dir_rpt}/${name_rpt_clk1}.rpt
-report_timing_summary -file ${dir_rpt}/${name_rpt_timing1}.rpt
+# report_clocks -file ${dir_rpt}/${name_rpt_clk1}.rpt
+# report_timing_summary -file ${dir_rpt}/${name_rpt_timing1}.rpt
 report_utilization -file ${dir_rpt}/${name_rpt_util1}.rpt
 
 # * get elapsed time
@@ -49,4 +39,4 @@ set seconds [expr {$rem_sec % 60}]
 # print total time taken
 print_blue "Simulation started at:  [clock format $start_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
 print_blue "Simulation ended at:    [clock format $end_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
-print_red "Implementation (opt_design) time taken: [format "%02d:%02d:%02d" $hours $minutes $seconds]"
+print_red "Implementation (opt_design) time taken: [format \"%02d:%02d:%02d:%02d\" $days $hours $minutes $seconds]"
