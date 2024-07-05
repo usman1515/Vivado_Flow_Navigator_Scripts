@@ -26,18 +26,18 @@ set name_chkp_rtl       "post_rtl_analysis"
 
 # * vars synthesis
 set name_run_synth      "synth_1"
-set name_chkp_synth     "post_synth"
+set name_chkp_synth     [lindex $argv 0]
 set name_rpt_clk        "post_synth_clocks"
 set name_rpt_timing     "post_synth_timing"
-set name_rpt_util       "post_synth_utilization"
+set name_rpt_util       [lindex $argv 4]
 
 # * vars implementation
 # opt_design
 set name_run_impl1      "impl_1"
-set name_chkp_impl1     "post_impl1_opt_design"
+set name_chkp_impl1     [lindex $argv 1]
 set name_rpt_clk1       "post_impl1_clocks"
 set name_rpt_timing1    "post_impl1_timing"
-set name_rpt_util1      "post_impl1_utilization"
+set name_rpt_util1      [lindex $argv 5]
 # power_opt_design
 set name_run_impl2      "impl_2"
 set name_chkp_impl2     "post_impl2_power_opt_design"
@@ -46,10 +46,10 @@ set name_rpt_timing2    "post_impl2_timing"
 set name_rpt_util2      "post_impl2_utilization"
 # place_design
 set name_run_impl3      "impl_3"
-set name_chkp_impl3     "post_impl3_place_design"
+set name_chkp_impl3     [lindex $argv 2]
 set name_rpt_clk3       "post_impl3_clocks"
 set name_rpt_timing3    "post_impl3_timing"
-set name_rpt_util3      "post_impl3_utilization"
+set name_rpt_util3      [lindex $argv 6]
 # phys_opt_design
 set name_run_impl4      "impl_4"
 set name_chkp_impl4     "post_impl4_phys_opt_design"
@@ -58,10 +58,10 @@ set name_rpt_timing4    "post_impl4_timing"
 set name_rpt_util4      "post_impl4_utilization"
 # route_design
 set name_run_impl5      "impl_5"
-set name_chkp_impl5     "post_impl5_route_design"
+set name_chkp_impl5     [lindex $argv 3]
 set name_rpt_clk5       "post_impl5_clocks"
 set name_rpt_timing5    "post_impl5_timing"
-set name_rpt_util5      "post_impl5_utilization"
+set name_rpt_util5      [lindex $argv 7]
 
 # * vars bitstream
 set name_bitstream      "bitstream_${prj_name}"
@@ -71,18 +71,20 @@ set name_rpt_timing6    "post_bit_timing"
 set name_rpt_util6      "post_bit_utilization"
 
 # * paths global
-set vhdl_rtl_dir        "${prj_dir}/${prj_name}.srcs/sources_1/imports/new"
-set vhdl_ip_srcs        "${prj_dir}/${prj_name}.srcs/sources_1/ip"
+set vhdl_rtl_dir        "${prj_dir}/${prj_name}.srcs/sources_1/imports"
+set vhdl_tb_dir         "${prj_dir}/${prj_name}.srcs/sim_1/imports"
+set ip_blk_srcs         "${prj_dir}/${prj_name}.srcs/sources_1/ip"
 set dir_constraint      "${prj_dir}/${prj_name}.srcs/constrs_1/new"
-set dir_rpt             "reports"
-set dir_chkp            "checkpoints"
-set dir_logs            "logs"
+set dir_bin             "bin"
+set dir_rpt             "${dir_bin}/reports"
+set dir_chkp            "${dir_bin}/checkpoints"
+set dir_logs            "${dir_bin}/logs"
 
 # * create in memory project
 # set fpga
 set_part ${fpga_part_name}
 # set board - comment for basys3
-# set_property board_part ${board_part_name} [current_project]
+set_property board_part ${board_part_name} [current_project]
 
 # * set max threads for implementation phases 1-8
 set_param general.maxThreads 8
@@ -109,6 +111,11 @@ if {![file isdirectory $dir_logs]} {
 } else {
     print_blue "\nDirectory already exists: $dir_logs"
 }
+
+# default message limit for all messages = 100
+set_param messaging.defaultLimit 1000
+set msg_limit [get_param messaging.defaultLimit]
+print_blue "\nMessages default limit: $msg_limit"
 
 
 # ===================================== Print all vars and paths
