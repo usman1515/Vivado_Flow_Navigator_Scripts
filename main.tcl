@@ -29,7 +29,7 @@ set name_run_synth      "synth_1"
 set name_chkp_synth     [lindex $argv 0]
 set name_rpt_clk        "post_synth_clocks"
 set name_rpt_timing     "post_synth_timing"
-set name_rpt_util       [lindex $argv 4]
+set name_rpt_util       [lindex $argv 7]
 
 # * vars implementation
 # opt_design
@@ -37,38 +37,38 @@ set name_run_impl1      "impl_1"
 set name_chkp_impl1     [lindex $argv 1]
 set name_rpt_clk1       "post_impl1_clocks"
 set name_rpt_timing1    "post_impl1_timing"
-set name_rpt_util1      [lindex $argv 5]
+set name_rpt_util1      [lindex $argv 8]
 # power_opt_design
 set name_run_impl2      "impl_2"
-set name_chkp_impl2     "post_impl2_power_opt_design"
+set name_chkp_impl2     [lindex $argv 2]
 set name_rpt_clk2       "post_impl2_clocks"
 set name_rpt_timing2    "post_impl2_timing"
-set name_rpt_util2      "post_impl2_utilization"
+set name_rpt_util2      [lindex $argv 9]
 # place_design
 set name_run_impl3      "impl_3"
-set name_chkp_impl3     [lindex $argv 2]
+set name_chkp_impl3     [lindex $argv 3]
 set name_rpt_clk3       "post_impl3_clocks"
 set name_rpt_timing3    "post_impl3_timing"
-set name_rpt_util3      [lindex $argv 6]
+set name_rpt_util3      [lindex $argv 10]
 # phys_opt_design
 set name_run_impl4      "impl_4"
-set name_chkp_impl4     "post_impl4_phys_opt_design"
+set name_chkp_impl4     [lindex $argv 4]
 set name_rpt_clk4       "post_impl4_clocks"
 set name_rpt_timing4    "post_impl4_timing"
-set name_rpt_util4      "post_impl4_utilization"
+set name_rpt_util4      [lindex $argv 11]
 # route_design
 set name_run_impl5      "impl_5"
-set name_chkp_impl5     [lindex $argv 3]
+set name_chkp_impl5     [lindex $argv 5]
 set name_rpt_clk5       "post_impl5_clocks"
 set name_rpt_timing5    "post_impl5_timing"
-set name_rpt_util5      [lindex $argv 7]
+set name_rpt_util5      [lindex $argv 12]
 
 # * vars bitstream
-set name_bitstream      "bitstream_${prj_name}"
+set name_bitstream      "[lindex $argv 6]"
 set name_run_bit        "bit_1"
 set name_rpt_clk6       "post_bit_clocks"
 set name_rpt_timing6    "post_bit_timing"
-set name_rpt_util6      "post_bit_utilization"
+set name_rpt_util6      [lindex $argv 13]
 
 # * paths global
 set vhdl_rtl_dir        "${prj_dir}/${prj_name}.srcs/sources_1/imports"
