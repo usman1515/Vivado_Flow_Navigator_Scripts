@@ -9,9 +9,9 @@ This repository contains a collection of Vivado scripts, designed to enhance and
     git clone git@github.com:usman1515/vivado_flow_navigator_scripts.git scripts
     ```
 -   When running scripts in batch mode.
-    -   All the reports will be saved in folder `<vivado_project>/reports`.
-    -   All checkpoints will be saved in folder `<vivado_project>/checkpoints`.
-    -   All logs will be saved in folder `<vivado_project>/logs`.
+    -   directory reports:      `<vivado_project>/bin/reports`.
+    -   directory checkpoints:  `<vivado_project>/bin/checkpoints`.
+    -   directory logs:         `<vivado_project>/bin/logs`.
 
 ### Tcl (Interactive) Mode
 
@@ -34,12 +34,12 @@ source ./scripts/convert_filetype_vhdl2008.tcl
 
 Batch mode involves executing a sequence of Vivado commands or a tcl script without user interaction, typically from the operating system's command line.
 -   Run all the batch mode scripts from `main.tcl` by commenting out the phases you dont want to run.
--   The synthesis and implementation phases generate checkpoint
+-   The synthesis and implementation phases generate checkpoints and reports.
 ```bash
 # move to vivado project folder
 cd <vivado_project>
 # run vivado in batch mode from the terminal
-vivado -mode batch -source ./scripts/main.tcl -notrace
+source run_vivado_batch_mode.sh
 ```
 
 | Script                       | Description                                            |
