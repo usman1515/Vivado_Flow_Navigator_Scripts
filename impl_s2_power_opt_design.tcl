@@ -5,23 +5,20 @@ source ./scripts/color_func.tcl
 # * get start time
 set start_time [clock seconds]
 
-# * open previous checkpoint
-print_green "reading checkpoint: ${name_chkp_impl1}"
+
+# open previous checkpoint
+print_yellow "reading checkpoint: ${name_chkp_impl1}"
 open_checkpoint ${dir_chkp}/${name_chkp_impl1}.dcp
 
-# * run power_opt_design
-print_green "running implementation phase: power_opt_design"
-power_opt_design
+# run power_opt_design
+print_yellow "running implementation phase: power_opt_design"
+power_opt_design -verbose
 
-# * write checkpoint
-print_green "writing checkpoint: ${name_chkp_impl2}"
+# write checkpoint
+print_yellow "writing checkpoint: ${name_chkp_impl2}"
 write_checkpoint -force ${dir_chkp}/${name_chkp_impl2}.dcp
 
-# * write reports
-print_green "writing reports: post implementation power_opt_design"
-report_clocks -file ${dir_rpt}/${name_rpt_clk2}.rpt
-report_timing_summary -file ${dir_rpt}/${name_rpt_timing2}.rpt
-report_utilization -file ${dir_rpt}/${name_rpt_util2}.rpt
+
 
 # * get elapsed time
 # get end time
@@ -38,4 +35,4 @@ set seconds [expr {$rem_sec % 60}]
 # print total time taken
 print_blue "Simulation started at:  [clock format $start_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
 print_blue "Simulation ended at:    [clock format $end_time -format "%d-%b-%Y - %I:%M:%S - %p"]"
-print_red "Implementation (power_opt_design) time taken: [format \"%02d:%02d:%02d:%02d\" $days $hours $minutes $seconds]"
+print_green "Implementation (power_opt_design) time taken: [format \"%02d:%02d:%02d:%02d\" $days $hours $minutes $seconds]"
