@@ -17,6 +17,14 @@ proc print_green {input_string} {
     puts -nonewline "\033\[0m"; # reset color
 }
 
+proc print_yellow {input_string} {
+    puts -nonewline "\033\[1;33m"; # set YELLOW color for text
+    puts "\n------------------------------------------------------------"
+    puts $input_string
+    puts "------------------------------------------------------------\n"
+    puts -nonewline "\033\[0m"; # reset color
+}
+
 proc print_blue {input_string} {
     puts -nonewline "\033\[1;34m"; # set BLUE color for text
     puts $input_string

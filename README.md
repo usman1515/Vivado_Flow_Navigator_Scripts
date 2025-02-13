@@ -1,59 +1,93 @@
-# Vivado Flow Navigator Scripts
+# Vivado Project Template
 
 ## Introduction
-This repository contains a collection of Vivado scripts, designed to enhance and streamline and automate the various phases of the project flow. The scripts can be run in either `tcl` mode or `batch` mode.
 
-## Usage
--   Clone the repo in your Vivado project folder and rename it as `scripts`.
-    ```bash
-    git clone git@github.com:usman1515/vivado_flow_navigator_scripts.git scripts
-    ```
--   When running scripts in batch mode.
-    -   directory reports:      `<vivado_project>/bin/reports`.
-    -   directory checkpoints:  `<vivado_project>/bin/checkpoints`.
-    -   directory logs:         `<vivado_project>/bin/logs`.
+This repository contains a Makefile and a collection of scripts designed to streamline and automate
+the workflow for Vivado projects. It provides templates and utility scripts for both batch mode and
+normal mode operations, making it easier to configure, manage, and run Vivado projects for FPGA
+design and development.
 
-### Tcl (Interactive) Mode
+The scripts help with tasks such as:
+- Automating project creation and configuration.
+- Managing project flows in Vivado, including synthesis, implementation, and bitstream generation.
 
-In TCL mode, users interact with Vivado through the tcl scripting language within the Vivado console or command-line interface.
--   The following scripts can be run directly in Vivado Tcl Console.
+## Project directory outline
+
+This is how you should setup your Vivado project inorder for the scripts and Makefile to work.
+
 ```bash
-# move to vivado project folder
-cd <vivado_project>
-# run from the vivado tcl console
-source ./scripts/convert_filetype_vhdl2008.tcl
+prj_root_dir/
+├── bin/                # dump folder (created automatically)
+│   ├── checkpoints/    # design checkpoints stored here
+│   ├── logs/           # logs stored here
+│   ├── reports/        # reports stored here
+│   └── testbench/      # testbench outputs stored here
+├── scripts/            # dir tcl scripts
+├── constraints/        # vivado constraint files
+├── ip/                 # vivado IP blocks .xci files
+├── rtl/                # Verilog/VHDL modules
+├── tb/                 # testbenches
+└── Makefile
 ```
 
-| Script                        | Description                         |
-| :---------------------------- | :---------------------------------- |
-| convert_filetype_vhdl2008.tcl | convert all VHDL files to VHDL 2008 |
+## Setting up your project
+- Look at all the lines where the todo comment `# ----- INFO:` is mentioned in the tcl scripts `setup_project.tcl` and update the following.
+  1. set project name and directory
+  2. set required FPGA part and board
+  3. set RTL and TB language
+  4. set name for RTL top module
+  5. **OPTIONAL** specify XCI files if youre using any Xilinx IP blocks or UniMacros
+  6. add VHDL rtl source files to the project
+  7. add Verilog TB source files to the project
+  8. add top level IO constraints
 
-<!-- ||| -->
+- Look at all the lines where the todo comment `# ----- INFO:` is mentioned in the tcl scripts `synthesis.tcl` and update the following.
+  1. **OPTIONAL** add all the Xilinx IP blocks if youre using any. Each block must its own read, import, create, upgrade, synthesis.
+  2. set top level IO constraint file
 
-### Batch (Non-Interactive) Mode
+## Creating Vivado project
+- Run target: `make setup_prj`
 
-Batch mode involves executing a sequence of Vivado commands or a tcl script without user interaction, typically from the operating system's command line.
--   Run all the batch mode scripts from `main.tcl` by commenting out the phases you dont want to run.
--   The synthesis and implementation phases generate checkpoints and reports.
+- A vivado project by the name of `prj_name` will be created.
+
+## Running Vivado project
+
+- The flow of synthesis and implemented can be controlled using the `main.tcl` script. Simply comment out the phase which you dont want to run.
+
+- **NOTE** that implementation requires a synthesis DCP.
+  - Implementation stages 1,3,5 need to be run at all costs.
+  - Implementation stages 2,4 are optional.
+
+### Testbench Simulation
+- To simulate a testbench using the Makefile run the following:
 ```bash
-# move to vivado project folder
-cd <vivado_project>
-# run vivado in batch mode from the terminal
-source run_vivado_batch_mode.sh
+make tb_simulation rtl=<rel_file_path> tb=<rel_file_path>
 ```
+- RTL file and module must have the same name.
+- Testbench file and module must have naming convention `tb_<rtl_module_name>`.
 
-| Script                       | Description                                            |
-| :--------------------------- | :----------------------------------------------------- |
-| main.tcl                     | main script. run all batch mode scripts from this one. |
-| color_func.tcl               | print string statements in a particular color.         |
-| vars.tcl                     | print all the global variables being used.             |
-| rtl_analysis.tcl             | run RTL analysis phase.                                |
-| synthesis.tcl                | run Synthesis phase.                                   |
-| impl_s1_opt_design.tcl       | run Implementation phase 1 `opt_design`.               |
-| impl_s2_power_opt_design.tcl | run Implementation phase 2 `power_opt_design`.         |
-| impl_s3_place_design.tcl     | run Implementation phase 3 `place_design`.             |
-| impl_s4_phys_opt_design.tcl  | run Implementation phase 4 `phys_opt_design`.          |
-| impl_s5_route_design.tcl     | run Implementation phase 5 `route_design`.             |
-| gen_bitstream.tcl            | run Program and Debug phase.                           |
+- The tcl script `tb_sim.tcl` is available which can cross compile RTL and TB module having VHDL, Verilog or Systemverilog code.
 
-<!-- ||| -->
+
+### Synthesis
+- Run target `make run_vivado` to invoke `main.tcl` and make sure the following code is uncommented.
+  ```
+  source scripts/vars.tcl
+  source scripts/synthesis.tcl
+  ```
+
+### Implementation
+- Run target `make run_vivado` to invoke `main.tcl` and make sure the following code is uncommented.
+  ```
+  source scripts/impl_s1_opt_design.tcl
+  source scripts/impl_s2_power_opt_design.tcl
+  source scripts/impl_s3_place_design.tcl
+  source scripts/impl_s4_phys_opt_design.tcl
+  source scripts/impl_s5_route_design.tcl
+  ```
+
+### Bitstream generation
+- Run target `make run_vivado` to invoke `main.tcl` and make sure the following code is uncommented. Route design DCP must be available.
+  ```
+  source scripts/gen_bitstream.tcl
+  ```
