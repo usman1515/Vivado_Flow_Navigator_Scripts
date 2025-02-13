@@ -124,7 +124,6 @@ print_blue "\nMessages default limit: $msg_limit"
 # ----- INFO: main flow scripts
 # synthesis
 source scripts/vars.tcl
-source scripts/rtl_analysis.tcl
 source scripts/synthesis.tcl
 
 # implementation
